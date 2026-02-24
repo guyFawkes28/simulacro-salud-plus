@@ -5,7 +5,7 @@ import { dirname, join } from 'path'
 
 const { Pool } = pkg
 
-// Resolve path to init.sql relative to this file
+// Resuelve la ruta a init.sql relativa a este archivo
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export const pool = new Pool({
@@ -13,25 +13,25 @@ export const pool = new Pool({
 })
 
 pool.on('connect', () => {
-    console.log('✅ PostgreSQL connected')
+    console.log(' Conectado a PostgreSQL')
 })
 
 pool.on('error', (error) => {
-    console.error('❌ PostgreSQL error:', error.message)
+    console.error('Error en PostgreSQL:', error.message)
 })
 
-// Run a SQL query using the pool
+// Ejecuta una consulta SQL usando el pool
 export const query = (text, params) => pool.query(text, params)
 
-// Get a dedicated client for transactions — remember to call client.release() when done
+// Obtiene un cliente dedicado para transacciones — recuerda llamar client.release() al terminar
 export const getClient = () => pool.connect()
 
-// Create all tables and indexes from init.sql — safe to call multiple times
+// Crea tablas e índices leyendo scripts/init.sql — seguro de ejecutar varias veces
 export const initializeSchema = async () => {
     const sqlPath = join(__dirname, '..', '..', 'scripts', 'init.sql')
     const sql = readFileSync(sqlPath, 'utf8')
     await pool.query(sql)
-    console.log('✅ PostgreSQL schema initialized')
+    console.log(' Esquema de PostgreSQL inicializado')
 }
 
 // Wipe all rows and reset sequences — used by the migration when clearBefore = true
@@ -39,5 +39,5 @@ export const clearAllTables = async () => {
     await pool.query(
         'TRUNCATE TABLE appointments, patients, doctors, insurances RESTART IDENTITY CASCADE'
     )
-    console.log('✅ PostgreSQL tables cleared')
+    console.log(' Tablas de PostgreSQL limpiadas')
 }

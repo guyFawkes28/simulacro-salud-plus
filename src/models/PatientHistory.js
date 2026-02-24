@@ -11,16 +11,21 @@ const PatientHistorySchema = new mongoose.Schema({
         type: String, 
         required: true 
     },
-     // NoSQL: Guardamos un ARRAY de objetos (citas)
-    // Esto se llama "Embedding" o Incrustación.
+     // Embedding: guardamos todas las citas dentro del mismo documento
+    // para leer el historial completo en una sola consulta sin joins
     appointments: [
         {
-            appointmentId: { type: String },
-            date: { type: String },
-            doctorName: { type: String },
-            specialty: { type: String },
-            treatmentDescription: { type: String },
-            amountPaid: { type: Number }
+            appointmentId:       { type: String },
+            date:                { type: String },
+            doctorName:          { type: String },
+            doctorEmail:         { type: String },
+            specialty:           { type: String },
+            treatmentCode:       { type: String },
+            treatmentDescription:{ type: String },
+            treatmentCost:       { type: Number },
+            insuranceProvider:   { type: String },
+            coveragePercentage:  { type: Number },
+            amountPaid:          { type: Number }
         }
     ]
 }, { 
