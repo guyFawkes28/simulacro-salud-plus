@@ -1,0 +1,22 @@
+# Dependencias de Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Variables de Entorno (¡MUY IMPORTANTE!)
+.env
+
+# Datos de las Bases de Datos (Docker volumes)
+# Ignoramos las carpetas donde Docker guarda la data real para que no se suban a Git
+postgres_data/
+mongo_data/
+
+# Archivos de Datos locales
+data/*.csv
+
+# Logs y archivos del sistema
+.DS_Store
+dist/
+build/
+.vscode/
